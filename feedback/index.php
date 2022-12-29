@@ -1,57 +1,50 @@
-<?php include 'inc/header.php'; ?>
+<?php  include 'inc/header.php'; ?>
 
 <?php
- //Form Validations
- $name = $email = $body = '';
- $nameErr = $emailErr = $bodyErr = '';
+$name = $email = $feedback = '';
+$nameErr = $emailErr = $feedbackErr = '';
 
+if (isset($_POST['submit'])) {
+    //Validate name
+   if(empty($_POST['name'])){
+    $nameErr = 'Name is required';
+   }else{
+    $name = htmlspecialchars($_POST['name']);
+   }
+    //Validate email
+   if(empty($_POST['email'])){
+    $emailErr = 'Email is required';
+   }else{
+    $email = htmlspecialchars($_POST['email']);
+   }
+    //Validate name
+   if(empty($_POST['feedback'])){
+    $feedbackErr = 'Feedback is required';
+   }else{
+    $feedback = htmlspecialchars($_POST['feedback']);
+   }
 
-  if(isset($_POST['submit'])){
-      //Name Validation
-    if (empty($_POST['name'])) {
-      $nameErr = 'Name is required.';
-    }
-    else{
-      $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    }
-
-    //Email Validation
-    if (empty($_POST['email'])) {
-      $emailErr = 'Email is required.';
-    }
-    else{
-      $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    }
-
-    //Body  Validation
-    if (empty($_POST['body'])) {
-      $bodyErr = 'Feedback is required.';
-    }
-    else{
-      $body = filter_input(INPUT_POST, 'body', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    }
-
-    //Check if all are Valid
-    if(empty($nameErr) && empty($emailErr) && empty($bodyErr)){
-      //Success (Add to db)
-      $sql = "INSERT INTO feedback (name, email, body) VALUES ('$name','$email', '$body')";
-
-      if (mysqli_query($conn, $sql)) {
-          //Redirect user
-          header('Location: ./feedback.php');
-      }
-      else{
-         echo 'Error: '. mysqli_error($conn);
-      }
-
-    }
+   if (empty($nameErr) && empty($emailErr) && empty($feedbackErr)) {
+    //Insert into db
+     $sql = "INSERT INTO feedback (name,email,feedback) VALUES ('$name', '$email','$feedback')";
     
+     if (mysqli_query($conn, $sql)) {
+        header('Location: ./feedback.php');
 
-  }
+     }
+     else{
+      echo 'Failed to insert data:'. $mysqli_error($conn);
+     }
+    # code...
+   }
+}
+
+echo $nameErr;
+
 
 ?>
 
-<img src="./img/logo.png" class=" mb-3" alt="logo" style="width: 36px;">
+<img src="img/logo.png" class="mb-3" style="width: 100px;" alt="Logo">
 <h2>Feedback</h2>
 <p class="lead text-center">Leave feedback for Traversy Media</p>
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="mt-4 w-75">
@@ -73,10 +66,10 @@
   </div>
   <div class="mb-3">
     <label for="body" class="form-label">Feedback</label>
-    <textarea class="form-control <?php echo $bodyErr ? 'is-invalid':null; ?>" id="body" name="body"
+    <textarea class="form-control  <?php echo $feedbackErr ? 'is-invalid': null; ?>" id="body" name="feedback"
       placeholder="Enter your feedback"></textarea>
     <div class="invalid-feedback">
-      <?php echo $bodyErr; ?>
+      <?php echo $feedbackErr; ?>
     </div>
   </div>
   <div class="mb-3">
@@ -84,4 +77,4 @@
   </div>
 </form>
 
-<?php include 'inc/footer.php'; ?>
+<?php  include 'inc/footer.php'; ?>
