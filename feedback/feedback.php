@@ -1,13 +1,12 @@
 <?php  include 'inc/header.php'; ?>
 
 <?php
-$sql = 'SELECT * FROM feedback';
+$sql = 'SELECT * FROM feedback LIMIT 2';
 $result = mysqli_query($conn, $sql);
 $feedback = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-
-
 ?>
+
 
 <h2>Feedback</h2>
 
@@ -25,6 +24,11 @@ $feedback = mysqli_fetch_all($result, MYSQLI_ASSOC);
   </div>
 </div>
 <?php endforeach; ?>
+
+
+<div id="output"></div>
+
+<button id="loadMore" class="btn btn-secondary">Load More</button>
 
 
 

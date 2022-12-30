@@ -11,6 +11,17 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <title>Leave Feedback</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+     var limit = 2;
+     var offset = 0;
+    $('#loadMore').click(function(){
+       offset = offset + 2;
+      $('#output').load('/testing/feedback/inc/loadfeedback.php',{ offset:offset, limit: limit})
+    })
+  });
+</script>
 </head>
 
 <body>

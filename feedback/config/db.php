@@ -11,4 +11,4 @@ if ($conn->connect_error) {
     echo "Failed to connect to db".$conn->connect_error;
 }
 
-echo "CONNECTED";
+// echo "CONNECTED";
